@@ -1,3 +1,4 @@
+import tester.H5ObjectEx_D_Hyperslab;
 
 public class Main {
 
@@ -5,11 +6,16 @@ public class Main {
 		// TODO Auto-generated method stub
 
 		
+		/*
 		//Constructor parameter: Input folder,Output folder, File type, start time, end time, row start index, row end index, column start index, column end index
 		HDFExtractor hdfex = new HDFExtractor("/home/sehokim/KISTI/Sample/HDF/HDF_sample1","/home/sehokim/KISTI/extracted","L3","2003000004506667", "2003020004506667",300,400,300,400);
-		
 		hdfex.extractAndMerge();
-
+		*/
+		
+		H5ObjectEx_D_Hyperslab hyper = new H5ObjectEx_D_Hyperslab();
+		
+		hyper.writeHyperslab();
+		hyper.readHyperslab();
 		
 		
 		

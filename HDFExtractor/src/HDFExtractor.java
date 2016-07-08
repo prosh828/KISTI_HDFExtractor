@@ -25,6 +25,9 @@ public class HDFExtractor {
 	private int cStartIdx;
 	private int cEndIdx;
 	
+	private int dim_x;
+	private int dim_y;
+	
 	private ArrayList<HDFFile> fileList;
 	private FileFilter fileFilter;
 	
@@ -47,6 +50,9 @@ public class HDFExtractor {
 		this.cStartIdx = cStartIdx;
 		this.cEndIdx = cEndIdx;
 		
+		this.dim_x = this.rEndIdx-this.rStartIdx;
+		this.dim_y = this.cEndIdx-this.cStartIdx;
+		
 		this.fileList = new ArrayList<HDFFile>();
 		this.fileFilter = new FileFilter();
 		
@@ -54,7 +60,7 @@ public class HDFExtractor {
 		this.outfile = new HDFFile(this.outDir+"/"+this.outFileName);
 		if(outfile.createFile())
 		{
-			
+			System.out.println("Out file is created.");
 		}
 		else
 		{
@@ -76,6 +82,18 @@ public class HDFExtractor {
 	{
 		//get the list of files that satisfy conditions
 		this.fileList = this.fileFilter.filterFileOut(this.inDir, this.filetype, this.starttime, this.endtime);
+		
+		
+		//The data that will be written to 3-dimensional dataset.
+		int result[][] = new int[this.fileList.size()][this.dim_x*this.dim_y];
+		
+		for(int i=0;i<this.fileList.size();i++)
+		{
+			
+		}
+		
+		
+		
 		
 		//create 3-dimensional dataset
 		

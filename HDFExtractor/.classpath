@@ -5,7 +5,11 @@
 	<classpathentry kind="lib" path="/usr/local/lib/jarfitsobj.jar"/>
 	<classpathentry kind="lib" path="/usr/local/lib/jarh4obj.jar"/>
 	<classpathentry kind="lib" path="/usr/local/lib/jarh5obj.jar"/>
-	<classpathentry kind="lib" path="/usr/local/lib/jarhdf5-2.11.0.jar"/>
+	<classpathentry kind="lib" path="/usr/local/lib/jarhdf5-2.11.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/sehokim/Downloads/HDF5/hdf-java/native/hdf5lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="/usr/local/lib/jarhdf-2.11.0.jar"/>
 	<classpathentry kind="lib" path="/usr/local/lib/jarhdfobj.jar"/>
 	<classpathentry kind="lib" path="/usr/local/lib/jarnc2obj.jar"/>

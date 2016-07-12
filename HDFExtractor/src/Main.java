@@ -7,6 +7,11 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		System.getProperty("sun.arch.data.model");
+		
+		System.out.println(System.getProperty("java.library.path"));
+		System.load("/usr/lib/jarhdf5-2.11.0.jar");
+		
 		
 		Scanner scan = new Scanner(System.in);
 		String inFolder, outFolder, fileType, starttime, endtime;
@@ -50,7 +55,7 @@ public class Main {
 		rStartIdx = 300;
 		System.out.print("\nInput the end index of row: ");
 		rEndIdx = scan.nextInt();
-		rEndIdx = 400;
+		rEndIdx = 305;
 		
 		//get row index
 		System.out.print("\nInput the start index of column: ");
@@ -58,7 +63,7 @@ public class Main {
 		cStartIdx = 300;
 		System.out.print("\nInput the end index of column: ");
 		cEndIdx = scan.nextInt();
-		cEndIdx = 400;
+		cEndIdx = 305;
 		
 		
 		

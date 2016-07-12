@@ -77,13 +77,12 @@ public class HDFExtractor {
 		this.scan = new Scanner(System.in);
 	}
 	
-	public float[] extractL2(HDFFile file)
+	public float[][] extractL2(HDFFile file)
 	{
-		float[] result = null;
 		Group root = (Group)((javax.swing.tree.DefaultMutableTreeNode)file.getRoot()).getUserObject();
 		
-		//extract whole data of 'Geophysical data' group and select specific data
-		Group gpData;
+		//extract data of 'Geophysical data' group by using hyperslab
+		Group gpData = null;
 		
 		for(int i=0;i<root.getMemberList().size();i++)
 		{
@@ -92,9 +91,17 @@ public class HDFExtractor {
 				gpData = (Group)root.getMemberList().get(i);
 			}
 		}
-		//Dataset dataset = (Dataset)root.getMemberList().get(0);
 		
-		//extract data by using hyperslab
+		float[][] result = new float[gpData.getMemberList().size()][];
+		
+		for(int i=0;i<gpData.getMemberList().size();i++)
+		{
+			Dataset dataset = (Dataset)gpData.getMemberList().get(i);
+			
+			result[i] = this.hdfDataset.readFloatData(dataset, this.rStartIdx, this.rEndIdx, this.cStartIdx, this.cEndIdx);
+			System.out.println(result[i]);
+		}
+		
 		
 		return result;
 	}
@@ -104,11 +111,9 @@ public class HDFExtractor {
 		float[] result = null;
 		Group root = (Group)((javax.swing.tree.DefaultMutableTreeNode)file.getRoot()).getUserObject();
 		
-		//extract whole data and select specific data
+		//extract data by using hyperslab
 		Dataset dataset = (Dataset)root.getMemberList().get(0);
 		
-		
-		//extract data by using hyperslab
 		
 		return result;
 	}
@@ -118,12 +123,12 @@ public class HDFExtractor {
 		//get the list of files that satisfy conditions
 		this.fileList = this.fileFilter.filterFileOut(this.inDir, this.filetype, this.starttime, this.endtime);
 		
-		//The data that will be written to 3-dimensional dataset.
-		float result[][] = new float[this.fileList.size()][this.dim_x*this.dim_y];
-		
 		//extract data from dataset according to the filetype
 		if(this.filetype.equalsIgnoreCase("L2"))
 		{
+			//The data that will be written to 3-dimensional dataset.
+			float result[][][] = new float[this.fileList.size()][][];
+			
 			for(int i=0;i<this.fileList.size();i++)
 			{
 				result[i] = this.extractL2(this.fileList.get(i));
@@ -131,6 +136,9 @@ public class HDFExtractor {
 		}
 		else if(this.filetype.equalsIgnoreCase("L3"))
 		{
+			//The data that will be written to 3-dimensional dataset.
+			float result[][] = new float[this.fileList.size()][this.dim_x*this.dim_y];
+			
 			for(int i=0;i<this.fileList.size();i++)
 			{
 				result[i] = this.extractL3(this.fileList.get(i));
@@ -145,23 +153,23 @@ public class HDFExtractor {
 		
 		
 		
-		for(int i=0;i<this.fileList.size();i++)
-		{
-			System.out.println(this.fileList.get(i).getName());
-			
-			
-			
-			Group root = (Group)((javax.swing.tree.DefaultMutableTreeNode)this.fileList.get(i).getRoot()).getUserObject();
-			for(int j=0;j<root.getMemberList().size();j++)
-			{
-				System.out.println(root.getMemberList().get(j).getFullName());
-			}
+//		for(int i=0;i<this.fileList.size();i++)
+//		{
+//			System.out.println(this.fileList.get(i).getName());
+//			
+//			
+//			
+//			Group root = (Group)((javax.swing.tree.DefaultMutableTreeNode)this.fileList.get(i).getRoot()).getUserObject();
+//			for(int j=0;j<root.getMemberList().size();j++)
+//			{
+//				System.out.println(root.getMemberList().get(j).getFullName());
+//			}
 //			Dataset dataset = (Dataset)root.getMemberList().get(0);
 //			dataset.hasAttribute();
 //			try {
 //				float[] data = (float[]) dataset.read();
 //				long[] dims = dataset.getDims();
-//				System.out.println(dims.length);
+//				System.out.println(dims[0]+" "+dims[1]);
 //				float[] data2 = (float[])dataset.getData();
 //				System.out.println(data2.length);
 //				System.out.println(data[20692804]);
@@ -169,8 +177,8 @@ public class HDFExtractor {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
-			System.out.println();
-		}
+//			System.out.println();
+//		}
 	}
 
 }

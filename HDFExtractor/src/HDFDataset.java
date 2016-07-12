@@ -10,5 +10,12 @@ public class HDFDataset {
 	{
 		
 	}
+	
+	public float[] readFloatData()
+	{
+		
+		
+		return null;
+	}
 
 }

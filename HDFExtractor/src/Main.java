@@ -1,27 +1,74 @@
+
+import java.util.Scanner;
+
 import tester.H5ObjectEx_D_Hyperslab;
 
 public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
 		
-		/*
+		Scanner scan = new Scanner(System.in);
+		String inFolder, outFolder, fileType, starttime, endtime;
+		int rStartIdx, rEndIdx, cStartIdx, cEndIdx;
+		
+		
+		
+		System.out.println("##########################################");
+		System.out.println("################HDFExtractor##############");
+		System.out.println("##########################################");
+		System.out.println();
+		
+		//get input folder
+		System.out.print("Input the input folder: ");
+		inFolder = scan.nextLine();
+		inFolder = "/home/sehokim/KISTI/Sample/HDF/HDF_sample2";
+		
+		//get output folder
+		System.out.print("\nInput the output folder: ");
+		outFolder = scan.nextLine();
+		outFolder = "/home/sehokim/KISTI/extracted";
+		
+		//get file type
+		System.out.print("\nInput the file type (L2/L3): ");
+		fileType = scan.nextLine();
+		fileType = "L2";
+		
+		//get start time
+		System.out.print("\nInput the started time (16 digits): ");
+		starttime = scan.nextLine();
+		starttime = "2010000004506667";
+		
+		//get end time
+		System.out.print("\nInput the ended time (16 digits): ");
+		endtime = scan.nextLine();
+		endtime = "2010020004506667";
+		
+		//get row index
+		System.out.print("\nInput the start index of row: ");
+		rStartIdx = scan.nextInt();
+		rStartIdx = 300;
+		System.out.print("\nInput the end index of row: ");
+		rEndIdx = scan.nextInt();
+		rEndIdx = 400;
+		
+		//get row index
+		System.out.print("\nInput the start index of column: ");
+		cStartIdx = scan.nextInt();
+		cStartIdx = 300;
+		System.out.print("\nInput the end index of column: ");
+		cEndIdx = scan.nextInt();
+		cEndIdx = 400;
+		
+		
+		
 		//Constructor parameter: Input folder,Output folder, File type, start time, end time, row start index, row end index, column start index, column end index
-		HDFExtractor hdfex = new HDFExtractor("/home/sehokim/KISTI/Sample/HDF/HDF_sample1","/home/sehokim/KISTI/extracted","L3","2003000004506667", "2003020004506667",300,400,300,400);
+		HDFExtractor hdfex = new HDFExtractor(inFolder,outFolder,fileType,starttime, endtime,rStartIdx,rEndIdx,cStartIdx,cEndIdx);
 		hdfex.extractAndMerge();
-		*/
-		
-		H5ObjectEx_D_Hyperslab hyper = new H5ObjectEx_D_Hyperslab();
-		
-		hyper.writeHyperslab();
-		hyper.readHyperslab();
 		
 		
-		
-		
-		//HDF5File file1 = new HDF5File("A20030012003008.L3m_8D_CHL_chlor_a_4km");
-		//file1.openFile("A20030012003008.L3m_8D_CHL_chlor_a_4km");
+		//close the scanner
+		scan.close();
 	}
 
 }

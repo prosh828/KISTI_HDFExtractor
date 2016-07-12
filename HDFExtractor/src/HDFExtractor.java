@@ -1,8 +1,6 @@
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
-import ncsa.hdf.object.Attribute;
 import ncsa.hdf.object.Dataset;
 import ncsa.hdf.object.Group;
 
@@ -35,6 +33,12 @@ public class HDFExtractor {
 	private String outFileName;
 	private HDFFile outfile;
 	
+	//HDF Tools
+	private HDFDataset hdfDataset;
+	
+	//Scanner
+	private Scanner scan;
+	
 	public HDFExtractor(String inDir, String outDir,String filetype, String starttime, String endtime, int rStartIdx, int rEndIdx,int cStartIdx, int cEndIdx)
 	{
 		this.inDir = inDir;
@@ -56,26 +60,57 @@ public class HDFExtractor {
 		this.fileList = new ArrayList<HDFFile>();
 		this.fileFilter = new FileFilter();
 		
+		//create the output file
 		this.outFileName = "output.h5";
 		this.outfile = new HDFFile(this.outDir+"/"+this.outFileName);
-		if(outfile.createFile())
-		{
-			System.out.println("Out file is created.");
-		}
-		else
-		{
-			System.out.println("Out file is not created.");
-		}
+//		if(outfile.createFile())
+//		{
+//			System.out.println("Out file is created.");
+//		}
+//		else
+//		{
+//			System.out.println("Out file is not created.");
+//		}
+		
+		this.hdfDataset = new HDFDataset();
+		
+		this.scan = new Scanner(System.in);
 	}
 	
-	public void extractL2()
+	public float[] extractL2(HDFFile file)
 	{
+		float[] result = null;
+		Group root = (Group)((javax.swing.tree.DefaultMutableTreeNode)file.getRoot()).getUserObject();
 		
+		//extract whole data of 'Geophysical data' group and select specific data
+		Group gpData;
+		
+		for(int i=0;i<root.getMemberList().size();i++)
+		{
+			if(root.getMemberList().get(i).getFullName().equalsIgnoreCase("/Geophysical Data"))
+			{
+				gpData = (Group)root.getMemberList().get(i);
+			}
+		}
+		//Dataset dataset = (Dataset)root.getMemberList().get(0);
+		
+		//extract data by using hyperslab
+		
+		return result;
 	}
 	
-	public void extractL3()
+	public float[] extractL3(HDFFile file)
 	{
+		float[] result = null;
+		Group root = (Group)((javax.swing.tree.DefaultMutableTreeNode)file.getRoot()).getUserObject();
 		
+		//extract whole data and select specific data
+		Dataset dataset = (Dataset)root.getMemberList().get(0);
+		
+		
+		//extract data by using hyperslab
+		
+		return result;
 	}
 	
 	public void extractAndMerge()
@@ -83,17 +118,28 @@ public class HDFExtractor {
 		//get the list of files that satisfy conditions
 		this.fileList = this.fileFilter.filterFileOut(this.inDir, this.filetype, this.starttime, this.endtime);
 		
-		
 		//The data that will be written to 3-dimensional dataset.
-		int result[][] = new int[this.fileList.size()][this.dim_x*this.dim_y];
+		float result[][] = new float[this.fileList.size()][this.dim_x*this.dim_y];
 		
-		for(int i=0;i<this.fileList.size();i++)
+		//extract data from dataset according to the filetype
+		if(this.filetype.equalsIgnoreCase("L2"))
+		{
+			for(int i=0;i<this.fileList.size();i++)
+			{
+				result[i] = this.extractL2(this.fileList.get(i));
+			}
+		}
+		else if(this.filetype.equalsIgnoreCase("L3"))
+		{
+			for(int i=0;i<this.fileList.size();i++)
+			{
+				result[i] = this.extractL3(this.fileList.get(i));
+			}
+		}
+		else
 		{
 			
 		}
-		
-		
-		
 		
 		//create 3-dimensional dataset
 		
@@ -105,12 +151,11 @@ public class HDFExtractor {
 			
 			
 			
-//			System.out.println(this.fileList.get(i).getFile().getName());
-//			Group root = (Group)((javax.swing.tree.DefaultMutableTreeNode)this.fileList.get(i).getRoot()).getUserObject();
-////			for(int j=0;j<root.getMemberList().size();j++)
-////			{
-////				System.out.println(root.getMemberList().get(j).getFullName());
-////			}
+			Group root = (Group)((javax.swing.tree.DefaultMutableTreeNode)this.fileList.get(i).getRoot()).getUserObject();
+			for(int j=0;j<root.getMemberList().size();j++)
+			{
+				System.out.println(root.getMemberList().get(j).getFullName());
+			}
 //			Dataset dataset = (Dataset)root.getMemberList().get(0);
 //			dataset.hasAttribute();
 //			try {
@@ -124,7 +169,7 @@ public class HDFExtractor {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
-//			System.out.println();
+			System.out.println();
 		}
 	}
 

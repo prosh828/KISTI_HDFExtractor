@@ -1,16 +1,15 @@
 
 import java.util.Scanner;
 
-import tester.H5ObjectEx_D_Hyperslab;
 
 public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.getProperty("sun.arch.data.model");
-		
-		System.out.println(System.getProperty("java.library.path"));
-		System.load("/usr/lib/jarhdf5-2.11.0.jar");
+//		System.getProperty("sun.arch.data.model");
+//		
+//		System.out.println(System.getProperty("java.library.path"));
+//		System.load("/usr/lib/jarhdf5-2.11.0.jar");
 		
 		
 		Scanner scan = new Scanner(System.in);

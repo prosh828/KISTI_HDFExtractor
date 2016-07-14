@@ -31,7 +31,7 @@ public class HDFDataset {
 				filespace_id = H5.H5Screate_simple(2, dims, null);
 	
 				long[] start = { rStartIdx, cStartIdx };
-				long[] stride = { 0, 0 };
+				long[] stride = { 1, 1 };
 				long[] count = { 1, 1 };
 				long[] block = { rEndIdx-rStartIdx, cEndIdx-cStartIdx };
 	
@@ -51,7 +51,7 @@ public class HDFDataset {
 			
 		} catch (NullPointerException | HDF5Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		
